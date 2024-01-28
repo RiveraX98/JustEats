@@ -1,0 +1,35 @@
+{% extends "base.html"%} {%block title%}{{search}}{%endblock%} {%block content%}
+{%if results == [] %}
+<h2>No recipes found for "{{search}}"</h2>
+{% else %}
+
+<h2>"{{search.capitalize()}}" recipes</h2>
+{% endif %}
+
+<div class="row justify-content-center">
+  {%for recipe in results%}
+  <div class="col-3 my-2">
+    <div
+      class="card"
+      style="
+        width: 16rem;
+        height: 21rem;
+        border-style: solid;
+        border-color: rgb(156, 181, 156);
+        border-width: 3px;
+      "
+    >
+      <img src="{{recipe.image}}" class="card-img-top" alt="food item" />
+      <div class="card-body">
+        <a class="title" href="/recipes/{{recipe.id}}">{{recipe.title}}</a>
+        <form method="POST" action="/users/favorites/add/{{ recipe.id }}">
+          <button class="btn btn-sm">
+            <i class="bi bi-star {{'favorited' if recipe.id in favorites}}"></i>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+  {%endfor%}
+</div>
+{%endblock%}

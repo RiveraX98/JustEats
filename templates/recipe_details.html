@@ -1,0 +1,39 @@
+{% extends "base.html"%} {%block title%}{{search}}{%endblock%} {%block content%}
+
+<div class="container">
+  <h2 style="text-align: center">{{results.title}}</h2>
+  <div
+    class="row justify-content-md-center"
+    style="background-color: rgb(216, 240, 219)"
+  >
+    <img
+      src="{{results.image}}"
+      alt="food item"
+      style="width: 25rem; margin-top: 2rem"
+    />
+    <div id="summary">{{ results.summary | safe }}</div>
+  </div>
+
+  <div class="row justify-content-center">
+    <div class="col-md-4 mt-4 text-center">
+      <h3>Ingredients</h3>
+      <div class="card">
+        <ul class="list-group list-group-flush">
+          {%for ingredient in results.extendedIngredients%}
+          <li class="list-group-item">
+            {{ingredient.amount}} {{ingredient.unit}} {{ingredient.name}}
+          </li>
+          {%endfor%}
+        </ul>
+      </div>
+    </div>
+    <div class="my-4" style="background-color: rgb(216, 240, 219)">
+      <h3>Cooking Instructions</h3>
+      {%for step in results.analyzedInstructions[0].steps %}
+      <div>{{step.number}}) {{step.step}}</div>
+      {%endfor%}
+    </div>
+  </div>
+</div>
+<script></script>
+{%endblock%}

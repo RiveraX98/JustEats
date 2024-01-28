@@ -1,0 +1,141 @@
+{% extends "base.html"%} {%block title%}Homepage{%endblock%} {%block content%}
+
+<h1 style="text-align: center">
+  <span>No fuss</span>
+  <span style="font-family: 'Satisfy'; color: green">JustEats</span>
+</h1>
+
+<div class="row my-5" style="border-style: solid; border-color: yellow">
+  <div class="col-6">
+    <img src="{{top_recipe.image}}" alt="food item" style="width: 35rem" />
+  </div>
+
+  <div class="card col-6">
+    <div class="card-body">
+      <h4 style="color: green; text-align: center">{{top_recipe.title}}</h4>
+      <p>{{top_recipe.summary | safe}}</p>
+    </div>
+  </div>
+</div>
+
+<div>
+  <h3 style="text-align: center">
+    <span
+      ><a class="title" href="/search?search=pasta">
+        Pasta <i class="bi bi-arrow-right-circle"></i> </a
+    ></span>
+  </h3>
+  <div
+    class="row align-items-start"
+    style="background-color: rgb(156, 181, 156)"
+  >
+    {%for recipe in pasta%}
+
+    <div class="col-3 my-2">
+      <div
+        class="card"
+        style="
+          width: 16rem;
+          height: 18rem;
+          border-style: solid;
+          border-color: green;
+          border-width: 2px;
+        "
+      >
+        <img src="{{recipe.image}}" class="card-img-top" alt="food item" />
+        <div class="card-body">
+          <a class="title" href="/recipes/{{recipe.id}}">{{recipe.title}}</a>
+          <form method="POST" action="/users/favorites/add/{{ recipe.id }}">
+            <button class="btn btn-sm">
+              <i
+                class="bi bi-star {{'favorited' if recipe.id in favorites}} "
+              ></i>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+    {%endfor%}
+  </div>
+</div>
+
+<div class="mt-5">
+  <h3 style="text-align: center">
+    <span
+      ><a class="title" href="/search?search=steak">
+        Steaks <i class="bi bi-arrow-right-circle"></i> </a
+    ></span>
+  </h3>
+  <div
+    class="row align-items-start"
+    style="background-color: rgb(156, 181, 156)"
+  >
+    {%for recipe in steak%}
+    <div class="col-3 my-2">
+      <div
+        class="card"
+        style="
+          width: 16rem;
+          height: 18rem;
+          border-style: solid;
+          border-color: green;
+          border-width: 2px;
+        "
+      >
+        <img src="{{recipe.image}}" class="card-img-top" alt="food item" />
+        <div class="card-body">
+          <a class="title" href="/recipes/{{recipe.id}}">{{recipe.title}}</a>
+          <form method="POST" action="/users/favorites/add/{{ recipe.id }}">
+            <button class="btn btn-sm">
+              <i
+                class="bi bi-star {{'favorited' if recipe.id in favorites}}"
+              ></i>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+    {%endfor%}
+  </div>
+</div>
+
+<div class="mt-5">
+  <h3 style="text-align: center">
+    <span
+      ><a class="title" href="/search?search=chicken"
+        >Chicken <i class="bi bi-arrow-right-circle"></i></a
+    ></span>
+  </h3>
+  <div
+    class="row align-items-start"
+    style="background-color: rgb(156, 181, 156)"
+  >
+    {%for recipe in chicken%}
+    <div class="col-3 my-2">
+      <div
+        class="card"
+        style="
+          width: 16rem;
+          height: 18rem;
+          border-style: solid;
+          border-color: green;
+          border-width: 2px;
+        "
+      >
+        <img src="{{recipe.image}}" class="card-img-top" alt="food item" />
+        <div class="card-body">
+          <a class="title" href="/recipes/{{recipe.id}}">{{recipe.title}}</a>
+          <form method="POST" action="/users/favorites/add/{{ recipe.id }}">
+            <button class="btn btn-sm">
+              <i
+                class="bi bi-star {{'favorited' if recipe.id in favorites}}"
+              ></i>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+    {%endfor%}
+  </div>
+</div>
+{%endblock%}

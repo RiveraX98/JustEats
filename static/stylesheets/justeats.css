@@ -1,0 +1,26 @@
+
+
+  .bi-star:hover {
+   color: orange;
+   cursor: pointer;
+  }
+
+  .favorited{
+    color: orange;
+    cursor: pointer;
+  }
+
+  .title{
+    text-decoration: none;
+    color: black;
+  }
+  .title:hover{
+    text-decoration: underline;
+  }
+
+.homepage-card{
+  width: 16rem;
+  height: 18rem;
+  border-style: solid;
+  border-color: green;
+}

@@ -1,0 +1,32 @@
+{% extends "base.html"%} {%block title%}Favorites{%endblock%} {%block content%}
+
+<h1>Saved recipes</h1>
+
+<div class="row">
+  {%for fave in favorites%}
+  <div class="col-3 my-2">
+    <div
+      class="card"
+      style="
+        width: 16rem;
+        height: 20rem;
+        border-style: solid;
+        border-color: rgb(156, 181, 156);
+        border-width: 3px;
+      "
+    >
+      <img src="{{fave.image}}" class="card-img-top" alt="food item" />
+      <div class="card-body">
+        <a class="title" href="/recipes/{{fave.recipe_id}}">{{fave.title}}</a>
+
+        <form method="POST" action="/users/favorites/add/{{ fave.recipe_id}}">
+          <button class="btn btn-sm">
+            <i class="bi bi-star favorited"></i>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+  {%endfor%}
+</div>
+{%endblock%}

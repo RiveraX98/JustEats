@@ -1,0 +1,27 @@
+{% extends "base.html"%} {%block title%}{{search}}{%endblock%} {%block content%}
+
+<div
+  class="mt-5"
+  style="text-align: center; border-style: solid; border-color: green"
+>
+  <h2>Welcome {{user.username}}</h2>
+  <h4 style="text-align: center">
+    <span>No fuss</span>
+    <span style="font-family: 'Satisfy'; color: green">JustEats</span>
+  </h4>
+
+  <div class="my-4">
+    <b>User Info:</b>
+    <div class="row justify-content-center">
+      <div class="card" style="width: 20rem">
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">Name: {{user.name}}</li>
+          <li class="list-group-item">Username: {{user.username}}</li>
+          <li class="list-group-item">Email: {{user.email}}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <a href="/users/profile/favorites">View Favorites</a>
+</div>
+{%endblock%}

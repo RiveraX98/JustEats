@@ -1,0 +1,54 @@
+{% extends "base.html"%} {%block title%}{{filter}}{%endblock%} {%block content%}
+
+<!-- <div><h1>{{filter}}</h1></div> -->
+{%for option in options%}
+<div class="row align-items-start my-5">
+  {%for recipe in option%} {%if recipe.type%}
+  <h3 style="text-align: center">
+    <span
+      ><a class="title" href="/search?search=chicken"
+        >{{recipe.type}} <i class="bi bi-arrow-right-circle"></i></a
+    ></span>
+  </h3>
+  {%else%}
+  <div class="col-3 my-2">
+    <div
+      class="card"
+      style="
+        width: 16rem;
+        height: 20rem;
+        border-style: solid;
+        border-color: rgb(156, 181, 156);
+        border-width: 3px;
+      "
+    >
+      <img src="{{recipe.image}}" class="card-img-top" alt="food item" />
+      <div class="card-body">
+        <a class="title" href="/recipes/{{recipe.id}}">{{recipe.title}}</a>
+        <form method="POST" action="/users/favorites/add/{{ recipe.id }}">
+          <button class="btn btn-sm">
+            <i
+              class="bi bi-star {{'favorited' if recipe.id in favorites}} "
+            ></i>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+  {%endif%} {%endfor%}
+</div>
+
+{%endfor%} {%if others%}
+<div class="card">
+  <div class="card-body">
+    <b>Check out other {{filter}}s :</b>
+    <div style="align-items: center">
+      {%for option in others%}
+      <a href="/search?search={{option}}" class="btn btn-sm btn-success"
+        >{{option.capitalize()}}</a
+      >
+      {%endfor%}
+    </div>
+  </div>
+</div>
+{%endif%} {%endblock%}
