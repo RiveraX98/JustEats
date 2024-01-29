@@ -1,0 +1,33 @@
+{% extends "base.html"%} {%block title%}Quick{%endblock%} {%block content%}
+
+<div class="row align-items-start my-5">
+  <h3 style="text-align: center">Meals ready in 30 minutes or less</h3>
+  {%for recipe in in20%}
+  <div class="col-3 my-2">
+    <div
+      class="card"
+      style="
+        width: 16rem;
+        height: 20rem;
+        border-style: solid;
+        border-color: rgb(156, 181, 156);
+        border-width: 3px;
+      "
+    >
+      <img src="{{recipe.image}}" class="card-img-top" alt="food item" />
+      <div class="card-body">
+        <a class="title" href="/recipes/{{recipe.id}}">{{recipe.title}}</a>
+        <form method="POST" action="/users/favorites/add/{{ recipe.id }}">
+          <button class="btn btn-sm">
+            <i
+              class="bi bi-star {{'favorited' if recipe.id in favorites}} "
+            ></i>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+  {%endfor%}
+</div>
+
+{%endblock%}

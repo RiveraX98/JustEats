@@ -8,7 +8,7 @@ content%}
   >
     <h1 class="join-message">Create Your Account</h1>
 
-    <form action="/register" , method="POST">
+    <form action="/users/register" , method="POST">
       {{form.hidden_tag()}} {% for field in form if field.widget.input_type !=
       "hidden"%}
       <p>{{field.label}} {{field (class_="form-control")}}</p>

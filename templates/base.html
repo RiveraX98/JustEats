@@ -59,22 +59,22 @@
             </a>
             <ul class="dropdown-menu">
               <li>
-                <a class="dropdown-item" href="/search?search=mexican"
+                <a class="dropdown-item" href="/recipes/search?search=mexican"
                   >Mexican</a
                 >
               </li>
               <li>
-                <a class="dropdown-item" href="/search?search=italian"
+                <a class="dropdown-item" href="/recipes/search?search=italian"
                   >Italian</a
                 >
               </li>
               <li>
-                <a class="dropdown-item" href="/search?search=american"
+                <a class="dropdown-item" href="/recipes/search?search=american"
                   >American</a
                 >
               </li>
               <li>
-                <a class="dropdown-item" href="/search?search=chinese"
+                <a class="dropdown-item" href="/recipes/search?search=chinese"
                   >Chinese</a
                 >
               </li>
@@ -98,20 +98,26 @@
             </a>
             <ul class="dropdown-menu">
               <li>
-                <a class="dropdown-item" href="/search?search=vegetarian"
+                <a
+                  class="dropdown-item"
+                  href="/recipes/search?search=vegetarian"
                   >Vegetarian</a
                 >
               </li>
               <li>
-                <a class="dropdown-item" href="/search?search=vegan">Vegan</a>
+                <a class="dropdown-item" href="/recipes/search?search=vegan"
+                  >Vegan</a
+                >
               </li>
               <li>
-                <a class="dropdown-item" href="/search?search=gluten+free"
+                <a
+                  class="dropdown-item"
+                  href="/recipes/search?search=gluten+free"
                   >Gluten Free</a
                 >
               </li>
               <li>
-                <a class="dropdown-item" href="/search?search=ketogenic"
+                <a class="dropdown-item" href="/recipes/search?search=ketogenic"
                   >Ketogenic</a
                 >
               </li>
@@ -126,7 +132,7 @@
           </li>
 
           <div>
-            <form class="d-flex" role="search" action="/search">
+            <form class="d-flex" role="search" action="/recipes/search">
               <input
                 class="form-control me-2"
                 type="search"
@@ -161,7 +167,7 @@
                 >
               </li>
               <li>
-                <a class="dropdown-item" href="/logout">Logout</a>
+                <a class="dropdown-item" href="/users/logout">Logout</a>
               </li>
             </ul>
           </div>
@@ -171,7 +177,7 @@
           </div>
 
           {%else%}
-          <a class="nav-link" href="/login">Login</a>
+          <a class="nav-link" href="/users/login">Login</a>
           {% endif %}
         </ul>
 

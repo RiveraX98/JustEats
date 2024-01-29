@@ -28,7 +28,19 @@ class User(db.Model):
     def register (cls, name, email, username, pwd):
         hashed= bcrypt.generate_password_hash(pwd)
         hashed_utf8 = hashed.decode("utf8")
-        return  cls(name=name,email=email,username=username,password=hashed_utf8)
+
+        user = User(
+            name=name,
+            username=username,
+            email=email,
+            password=hashed_utf8,
+        
+        )
+
+        db.session.add(user)
+        return user
+    
+        
     
     @classmethod
     def authenticate(cls,username, password):
@@ -50,5 +62,5 @@ class Recipes(db.Model):
     recipe_id= db.Column(db.Integer, nullable=False)
     title= db.Column(db.String, nullable=False)
     image= db.Column(db.String)
-    user_id= db.Column(db.Integer, db.ForeignKey("users.id"))
+    user_id= db.Column(db.Integer, db.ForeignKey("users.id",ondelete="CASCADE"))
     

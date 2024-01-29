@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template, jsonify, redirect, session, flash, request
+from flask import Flask, render_template, redirect, session, flash, request
 from flask_debugtoolbar import DebugToolbarExtension
 from models import connect_db, db, User, Recipes
 from forms import RegistrationForm, loginForm
@@ -12,7 +12,7 @@ app = Flask(__name__)
 app.app_context().push()
 
 app.config['SQLALCHEMY_DATABASE_URI'] = (
-    os.environ.get('DATABASE_URL', 'postgresql:///lets_eat' ))
+    os.environ.get('DATABASE_URL', 'postgresql:///lets_eat_test'))
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["SQLALCHEMY_ECHO"] = True
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', "ihavesecret321")
@@ -46,8 +46,49 @@ def show_homepage():
 
     return render_template("homepage.html",  pasta = pasta_recipes, steak = steak_recipes, chicken = chicken_recipes, favorites=fav_recipes,top_recipe=top_recipe)
 
-  
+@app.route("/users/register", methods=["GET", "POST"])
+def handle_registration():
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        # first_name = form.first_name.data
+        # last_name = form.last_name.data
+        name = form.name.data
+        username = form.username.data
+        email = form.email.data
+        password = form.password.data
+        user = User.register(name, email, username, password)
+        
+        try:
+            db.session.commit()
+        except IntegrityError:
+            form.username.errors.append("Username taken, Please try again")
+            return render_template("registration.html", form=form)
 
+        session["user_id"] = user.id
+        flash("Account created successfully", "success")
+        return redirect("/")
+
+    return render_template("registration.html", form=form)
+
+
+@app.route("/users/login", methods=["GET", "POST"])
+def handle_login():
+    form = loginForm()
+    if form.validate_on_submit():
+        username = form.username.data
+        password = form.password.data
+        user = User.authenticate(username, password)
+        if user:
+            flash(f"Welcome, {user.username}!","success")
+            session["user_id"] = user.id
+            return redirect("/")
+        else:
+            form.username.errors = ["Invalid username/password"]
+
+    return render_template("login.html", form=form)
+
+
+  
 @app.route("/users/profile/<int:user_id>")
 def show_user_profile(user_id):
     user = User.query.get(user_id)
@@ -61,7 +102,6 @@ def show_favorite_recipes():
     favorites = user.recipes
  
     return render_template("favorited_recipes.html", favorites=favorites)
-
 
 
 @app.route("/users/favorites/add/<int:recipe_id>", methods=["POST"])
@@ -81,62 +121,18 @@ def favorite_recipe(recipe_id):
         return (redirect("/"))
     
     flash("Must be logged in", "danger")
-    return redirect("/login")
+    return redirect("/users/login")
 
 
-
-@app.route("/register", methods=["GET", "POST"])
-def handle_registration():
-    form = RegistrationForm()
-    if form.validate_on_submit():
-        # first_name = form.first_name.data
-        # last_name = form.last_name.data
-        name = form.name.data
-        username = form.username.data
-        email = form.email.data
-        password = form.password.data
-        user = User.register(name, email, username, password)
-        db.session.add(user)
-        try:
-            db.session.commit()
-        except IntegrityError:
-            form.username.errors.append("Username taken, Please try again")
-            return render_template("registration.html", form=form)
-
-        session["user_id"] = user.id
-        flash("Account created successfully", "success")
-        return redirect("/")
-
-    return render_template("registration.html", form=form)
-    
-
-
-@app.route("/login", methods=["GET", "POST"])
-def handle_login():
-    form = loginForm()
-    if form.validate_on_submit():
-        username = form.username.data
-        password = form.password.data
-        user = User.authenticate(username, password)
-        if user:
-            flash(f"Welcome, {user.username}!","success")
-            session["user_id"] = user.id
-            return redirect("/")
-        else:
-            form.username.errors = ["Invalid username/password"]
-
-    return render_template("login.html", form=form)
-
-
-   
-@app.route("/search")
+@app.route("/recipes/search")
 def search_recipes():
     search = request.args.get("search").lower()
   
     if (search in cuisines):
-        search_res = Spoonacular_api.filter("cuisine",search)
+        search_res = Spoonacular_api.search("cuisine",search)
     elif (search in diets):
-        search_res = Spoonacular_api.filter("diet",search)
+        search_res = Spoonacular_api.search("diet",search)
+    
     else:
         search_res = Spoonacular_api.get_by_ingredient(search)
     return render_template("search.html", search=search, results=search_res)
@@ -162,9 +158,8 @@ def filter_recipes(filter):
         return render_template("filters.html",options=options, filter=filter,others=diets)
     
     if(filter == "quick"):
-        res= Spoonacular_api.filter("maxReadyTime", 20)
-        options=[[{"type":"Meals ready in 20 minutes or less"}, *res]]
-        return render_template("filters.html", options=options)
+        in20= Spoonacular_api.search("maxReadyTime", 30)
+        return render_template("quick.html", in20=in20 )
      
     return redirect("/")
     
@@ -175,11 +170,8 @@ def show_recipe_details(recipe_id):
     return render_template("recipe_details.html",results=search_res)
 
 
-
-
-
-@app.route("/logout")
-def logout_user():
+@app.route("/users/logout")
+def handle_logout():
     session.pop("user_id")
     flash("Logged out successfully", "success")
-    return redirect("/login")
+    return redirect("/users/login")

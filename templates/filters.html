@@ -1,12 +1,10 @@
 {% extends "base.html"%} {%block title%}{{filter}}{%endblock%} {%block content%}
-
-<!-- <div><h1>{{filter}}</h1></div> -->
 {%for option in options%}
 <div class="row align-items-start my-5">
   {%for recipe in option%} {%if recipe.type%}
   <h3 style="text-align: center">
     <span
-      ><a class="title" href="/search?search=chicken"
+      ><a class="title" href="/recipes/search?search={{recipe.type}}"
         >{{recipe.type}} <i class="bi bi-arrow-right-circle"></i></a
     ></span>
   </h3>
@@ -44,7 +42,7 @@
     <b>Check out other {{filter}}s :</b>
     <div style="align-items: center">
       {%for option in others%}
-      <a href="/search?search={{option}}" class="btn btn-sm btn-success"
+      <a href="/recipes/search?search={{option}}" class="btn btn-sm btn-success"
         >{{option.capitalize()}}</a
       >
       {%endfor%}
