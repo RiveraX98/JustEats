@@ -50,8 +50,6 @@ def show_homepage():
 def handle_registration():
     form = RegistrationForm()
     if form.validate_on_submit():
-        # first_name = form.first_name.data
-        # last_name = form.last_name.data
         name = form.name.data
         username = form.username.data
         email = form.email.data
@@ -98,9 +96,7 @@ def show_user_profile(user_id):
 @app.route("/users/profile/favorites")
 def show_favorite_recipes():
     user = User.query.get(session["user_id"])
-
     favorites = user.recipes
- 
     return render_template("favorited_recipes.html", favorites=favorites)
 
 
@@ -118,7 +114,7 @@ def favorite_recipe(recipe_id):
             new_Favorite = Recipes(user_id = session["user_id"], recipe_id=recipe_id, title= recipe["title"] , image = recipe["image"])
             db.session.add(new_Favorite)
             db.session.commit()
-        return (redirect("/"))
+            return redirect("/users/profile/favorites")
     
     flash("Must be logged in", "danger")
     return redirect("/users/login")
