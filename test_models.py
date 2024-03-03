@@ -3,7 +3,7 @@ from app import app
 from unittest import TestCase
 from models import db, User, Recipes
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///lets_eat_test'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///justeats_test'
 app.config['SQKAKCHEMY_ECHO'] = False
 
 db.drop_all()

@@ -3,8 +3,7 @@ import requests
 
 BASE_URL ="https://api.spoonacular.com" 
 API_KEY = "dc64625ccebe48d488c12a9b0796ac22"
-API_KEY2="21b179b10a784b999875a187ad110186"
-API_KEY3="13bfd76760c74610a427af43557ad4b4"
+
 
 
 

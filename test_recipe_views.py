@@ -3,7 +3,7 @@ from app import app
 from models import User,Recipes, db
 from flask import session 
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///lets_eat_test'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///justeats_test'
 app.config['SQLALCHEMY_ECHO'] = False
 app.config["WTF_CSRF_ENABLED"]=False
 app.config['TESTING'] = True

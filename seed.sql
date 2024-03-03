@@ -1,0 +1,19 @@
+
+
+
+CREATE TABLE users (
+id SERIAL PRIMARY KEY, 
+first_name TEXT NOT NULL, 
+last_name Text NOT NULL,
+email TEXT UNIQUE NOT NULL, 
+username TEXT UNIQUE NOT NULL, 
+password TEXT NOT NULL
+); 
+
+CREATE TABLE recipes(
+id SERIAL PRIMARY KEY, 
+recipe_id INTEGER NOT NULL,
+title TEXT NOT NULL,
+image TEXT, 
+user_id INTEGER REFERENCES users ON DELETE CASCADE
+)
