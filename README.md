@@ -1,5 +1,3 @@
-API : "https://spoonacular.com/food-api"
-
 # JustEats
 
 ## Overview
